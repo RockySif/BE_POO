@@ -1,13 +1,23 @@
+from datetime import datetime
+import time
+import pint
+import icontract
+ureg = pint.UnitRegistry()
+
+
 class Etat:
     def __init__(self):
         pass
 
-    def commande(self, ordre_mission:'mission'):
-        pass
+    @icontract.require(lambda date: date > datetime.today().date())
+    def commande(self, date:datetime.date, zone:'Zone'):
+        self.date = date
+        self.zone = zone
 
 
-class Mission:
-    def __init__(self, lieu, date, ordre):
+class Mission:  #T
+
+    def __init__(self, lieu, date:datetime.date, ordre):
         self.ordre = ordre
         self.lieu = lieu
         self.date = date
@@ -60,6 +70,17 @@ class Operateur:
     def add_drone(self, drone:Drone):
         self.flotte.append(drone)
 
-    def moncul(self)
+class CRM: #T
+    def __init__(self, mission:Mission, zones:dict = {}):
+        self.mission = mission
+        self.zones = zones
 
+    def add_zone(self, zone):
+        self.zones[zone] = time.time()
 
+class Zone: #T
+
+    @icontract.require(lambda pop: pop > 0)
+    def __init__(self, pop:int, idZone):
+        self.idZone = idZone
+        self.pop = pop
