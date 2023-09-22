@@ -60,4 +60,6 @@ class Operateur:
     def add_drone(self, drone:Drone):
         self.flotte.append(drone)
 
+    def moncul(self)
+
 
